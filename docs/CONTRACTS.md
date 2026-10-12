@@ -244,8 +244,8 @@ contract MockUSDC is ERC20 {
 `mint` 沒有任何權限檢查，**這只能用在測試網**，正式環境絕對不能部署這份合約當結算貨幣。
 
 Monsoon 目前在 Monad Testnet 上實際使用的結算貨幣，已經不是這份 MockUSDC，而是
-透過 Cleanverse 官方流程（`atoken/launch`）真實發行的 **A-Token**（symbol
-`mUSDCA2M282`，6 位小數）——也就是 CVA（Cleanverse Verified Asset）本體。
+透過 Cleanverse 官方流程（`atoken/launch`）真實發行的 **A-Token**（目前的 symbol
+`mUSDC55RY4T`，6 位小數；2026-10-12 為配合新的 App ID 重新發行）——也就是 CVA（Cleanverse Verified Asset）本體。
 `FinancingPool` 完全不知道這個差異，因為它只透過標準 `IERC20` 介面操作
 `stablecoin`；換成哪一種 ERC-20 合約，對 FinancingPool 的程式碼零影響，
 這也是為什麼部署腳本用一個環境變數 `MOCK_USDC_ADDRESS` 就能切換
@@ -295,15 +295,17 @@ NEXT_PUBLIC_FINANCING_POOL=0x...
 NEXT_PUBLIC_STABLECOIN=0x...
 ```
 
-**目前 Monad Testnet 上的實際地址**（記錄於
-`output/deploy_monadTestnet_202608021423.txt`，注意 `NEXT_PUBLIC_STABLECOIN`
-後來已改指向真實 A-Token，不再是這份記錄裡的原始 MockUSDC）：
+**目前 Monad Testnet 上的實際地址**（2026-10-12 重新部署，記錄於
+`output/deploy_monadTestnet_202610121920.txt`）。Cleanverse 規定 CVA 不能用不同的
+App ID 管理，所以 A-Token 改用目前的 App ID 重新發行，三份合約也跟著重新部署；
+舊的部署記錄保留在 `output/` 作為歷史：
 
 | 合約 | 地址 |
 |---|---|
-| ComplianceRegistry | `0xec97185d251cd17e58a4d5b6bc0ac1df8d9056e7` |
-| InvoiceAsset | `0x756fc8f842ae808ad5af5a773e52580b2969e343` |
-| FinancingPool | `0x6d210698924c56cc006c1f3d039bffdf607bfa4c` |
+| ComplianceRegistry | `0xaf678a90f64a41e176ad47dd8d35458448844c18` |
+| InvoiceAsset | `0x44f839d2f4127ff28e62fbf6141745b4bc2536c7` |
+| FinancingPool | `0x6d05312906afe245a2ae8011b3d17b292ebd8551` |
+| 結算貨幣（Cleanverse A-Token，symbol `mUSDC55RY4T`） | `0x25c92CFa4444FC1387D021e7bb5C7079f7486058` |
 | 部署者 / 銀行錢包 | `0x93ff16a0dc44bc61817ede60e1c705954219877f` |
 
 ---
